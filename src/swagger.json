@@ -1,0 +1,123 @@
+{   
+    "openapi": "3.0.1",
+    "info": {
+        "title": "Utilizando o swagger",
+        "description": "Esse é um exemplo geral para exercitar o uso do swagger.",
+        "termsOfService": "http://localhost:3000/terms",
+        "contact": {
+            "name": "Adam Teodoro",
+            "url": "https://adamteodoro.web.app",
+            "email": "adamteodoronunes@gmail.com"
+        },
+        "version": "0.0.1"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000/api",
+            "description": "Api de produção"
+        },
+        {
+            "url": "http://localhost:3000/sandbox",
+            "description": "Api de testes"
+        }
+    ],
+    "paths": {
+        "/createProduct": {
+            "post": {
+                "summary:": "Cadastro de produto",
+                "description": "Essa rota serve somente para criação de produtos.",
+                "tags": [ "Product" ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Product"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/getProduct": {
+            "get": {
+                "summary:": "Capturando um produto pelo id",
+                "description": "Essa rota serve somente para procurar um elemento pelo id.",
+                "tags": [ "Product" ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ]
+            }
+        },
+        "/updateProduct": {
+            "put": {
+                "summary:": "Atualizando um produto por id",
+                "description": "Essa rota serve somente para atualização de um produto.",
+                "tags": [ "Product" ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Product"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/deleteProduct": {
+            "delete": {
+                "summary:": "Apagando um produto por id",
+                "description": "Essa rota serve somente para apagar um produto e retornar o produto apagado",
+                "tags": [ "Product" ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Product": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "boolean",
+                        "description": "O status é true quando o produto está disponível e false quando o produto está indisponível."
+                    },
+                    "price": {
+                        "type": "number"                        
+                    },
+                    "quantity": {
+                        "type": "number"
+                    },
+                    "details": {
+                        "type": "string",
+                        "description": "Detalhes do produto, tamanho, peso, etc."
+                    }
+                },
+                "required": [ "id", "name", "status", "price", "quantity" ] 
+            }
+        },
+        "parameters": {
+            "id": {
+                "name": "id",
+                "in": "query",
+                "description": "É único para identificação do elemento.",
+                "required": true,
+                "schema": {
+                  "type": "number"
+                }
+            }
+        }
+    }
+}
