@@ -1,7 +1,7 @@
 {   
     "openapi": "3.0.1",
     "info": {
-        "title": "Utilizando o swagger",
+        "title": "Utilizando o swagger.",
         "description": "Esse é um exemplo geral para exercitar o uso do swagger.",
         "termsOfService": "http://localhost:3000/terms",
         "contact": {
@@ -24,42 +24,174 @@
     "paths": {
         "/createProduct": {
             "post": {
-                "summary:": "Cadastro de produto",
+                "summary:": "Cadastro de produto.",
                 "description": "Essa rota serve somente para criação de produtos.",
                 "tags": [ "Product" ],
                 "requestBody": {
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Product"
+                                "$ref": "#/components/schemas/product"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Devolve o objeto criado.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "product": {
+                                            "$ref": "#/components/schemas/product"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Esse é o código padrão, para essa requisição.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "string",
+                                            "description": "internal-server-error"
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
+            
         },
         "/getProduct": {
             "get": {
-                "summary:": "Capturando um produto pelo id",
+                "summary:": "Capturando um produto pelo id.",
                 "description": "Essa rota serve somente para procurar um elemento pelo id.",
                 "tags": [ "Product" ],
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/id"
                     }
-                ]
+                ],
+                "responses": {
+                    "200": {          
+                        "description": "Devolve o produto encontrado.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "product": {
+                                            "$ref": "#/components/schemas/product"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Esse código é retornado se não encontrado o produto com o id especificado.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "string",
+                                            "description": "product-not-found"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Esse é o código padrão para essa requisição.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "string",
+                                            "description": "internal-server-error"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/updateProduct": {
             "put": {
-                "summary:": "Atualizando um produto por id",
+                "summary:": "Atualizando um produto por id.",
                 "description": "Essa rota serve somente para atualização de um produto.",
                 "tags": [ "Product" ],
                 "requestBody": {
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Product"
+                                "$ref": "#/components/schemas/product"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {          
+                        "description": "Devolve o produto que foi atualizado.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "product": {
+                                            "$ref": "#/components/schemas/product"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Esse código é retornado se não foi possível encontrar o produto com id especificado.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "string",
+                                            "description": "product-not-found"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Esse é o código padrão para essa requisição.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "string",
+                                            "description": "internal-server-error"
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -68,20 +200,69 @@
         },
         "/deleteProduct": {
             "delete": {
-                "summary:": "Apagando um produto por id",
-                "description": "Essa rota serve somente para apagar um produto e retornar o produto apagado",
+                "summary:": "Apagando um produto por id.",
+                "description": "Essa rota serve somente para apagar um produto e retornar o produto apagado.",
                 "tags": [ "Product" ],
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/id"
                     }
-                ]
+                ],
+                "responses": {
+                    "200": {          
+                        "description": "Retorna o objeto apagado.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "product": {
+                                            "$ref": "#/components/schemas/product"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Esse código é retornado se o produto especificado não foi encontrado.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "string",
+                                            "description": "product-not-found"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Esse é o código padrão para essa requisição",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "string",
+                                            "description": "internal-server-error"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     },
     "components": {
         "schemas": {
-            "Product": {
+            "product": {
                 "type": "object",
                 "properties": {
                     "id": {

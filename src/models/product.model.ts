@@ -1,5 +1,10 @@
 import { IProduct } from "../interfaces/IProduct";
 
+
+/**
+ *  Its only fake db for simulate read and write.
+ */
+
 export class ProductModel {
     private _lastId: number = 2;
 
@@ -33,19 +38,6 @@ export class ProductModel {
         );
     }
 
-    getProduct(idProduct: number): Promise<IProduct|undefined> {
-        return new Promise((resolve, resject) =>  {
-            const product: IProduct = this._productArray.filter(
-                (product) => product.id == idProduct
-            )[0];
-            if (product) {
-                resolve(product)
-            } else {
-                resject({ code: 'product-not-found' });
-            }
-        });
-    }
-
     /**
      * 
      * @param productData one data with id of product
@@ -67,6 +59,19 @@ export class ProductModel {
         });
     }
 
+    getProduct(idProduct: number): Promise<IProduct|undefined> {
+        return new Promise((resolve, resject) =>  {
+            const product: IProduct = this._productArray.filter(
+                (product) => product.id == idProduct
+            )[0];
+            if (product) {
+                resolve(product)
+            } else {
+                resject({ code: 'product-not-found', status: 404 });
+            }
+        });
+    }
+
     updateProduct(newProduct: IProduct) {
         return new Promise((resolve, reject) => {
             if (this.productExists(newProduct)) {
@@ -75,7 +80,7 @@ export class ProductModel {
                 this._productArray.push(newProduct);
                 resolve(newProduct);
             } else {
-                reject({ code: "product-not-found" })
+                reject({ code: "product-not-found", status: 404 })
             }
         });
     }
@@ -86,7 +91,7 @@ export class ProductModel {
                 const index = this.getIndexById(idProduct);
                 resolve(this._productArray.splice(index)[0]);
             } else {
-                reject({ code: "product-not-found" })
+                reject({ code: "product-not-found", status: 400 })
             }
         });
     }

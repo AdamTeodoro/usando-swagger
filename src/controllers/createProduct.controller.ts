@@ -20,12 +20,11 @@ export const createProduct = async (req: Request, res: Response) => {
             .status(200)
             .end();
             return;
-        })
-        .catch(() => {
-            res.json({ code: 'fail-to-create-product'  })
-            .status(200)
-            .end();
-            return;
         });
-    } catch { }
+    } catch {
+        res.json({ code: 'internal-server-error' })
+        .status(500)
+        .end();
+        return;
+    }
 }

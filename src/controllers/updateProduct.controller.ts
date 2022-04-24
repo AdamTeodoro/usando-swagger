@@ -23,9 +23,14 @@ export const updateProduct = async (req: Request, res: Response) => {
         })
         .catch((error) => {
             res.json(error)
-            .status(200)
+            .status(error.status)
             .end();
             return;
         });
-    } catch { }
+    } catch {
+        res.json({ code: 'internal-server-error' })
+        .status(500)
+        .end();
+        return;
+    }
 }
