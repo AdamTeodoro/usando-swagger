@@ -17,8 +17,8 @@ export const createProduct = async (req: Request, res: Response) => {
         await productModel.createProduct(product)
         .then((product) => {
             res.json({ product })
-            .status(200)
-            .end();
+                .status(200)
+                .end();
             return;
         });
     } catch {

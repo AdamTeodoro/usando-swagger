@@ -15,20 +15,20 @@ export const deleteProduct = async (req: Request, res: Response) => {
         await productModel.deleteProduct(req.query.id)
         .then((product) => {
             res.json({ product })
-            .status(200)
-            .end();
+                .status(200)
+                .end();
             return;
         })
         .catch((error) => {
             res.json(error)
-            .status(error.status)
-            .end();
+                .status(error.status)
+                .end();
             return;
         });
     } catch {
         res.status(500)
-        .json({ code: 'internal-server-error' })
-        .end();
+            .json({ code: 'internal-server-error' })
+            .end();
         return 
     }
 }
